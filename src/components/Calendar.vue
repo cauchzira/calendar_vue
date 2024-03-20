@@ -51,7 +51,7 @@ export default {
 
     const daysOfWeek = {
       en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      ru: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
+      ru: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
     }
 
     const currentMonth = computed(() => {
@@ -67,7 +67,7 @@ export default {
       const year = currentDate.value.getFullYear();
       const month = currentDate.value.getMonth();
       const daysIsMonth = new Date(year, month + 1, 0).getDate();
-      const startDatOfWeek = new Date(year, month, 1).getDay();
+      const startDatOfWeek = new Date(year, month, currentLanguage.value === 'en' ? 1 : 0).getDay();
       const days = []
 
       for (let i = 1; i <= daysIsMonth; i++) {
@@ -82,13 +82,19 @@ export default {
     })
 
 
+    const changeMonth = (direction) => {
+      const newDate = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() + direction, 1);
+      selectedDate.value = newDate.getMonth() === new Date().getMonth() ? new Date() : null;
+      currentDate.value = newDate;
+    };
+
     const prevMonth = () => {
-      currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() - 1, 1);
-    }
+      changeMonth(-1);
+    };
 
     const nextMonth = () => {
-      currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() + 1,  1);
-    }
+      changeMonth(1);
+    };
 
     const selectDate = (day) => {
       if(day) {
@@ -128,6 +134,7 @@ export default {
 .calendar {
   font-family: Arial, sans-serif;
   max-width: 300px;
+  height: 300px;
   margin: 0 auto;
   padding: 20px;
   border-radius: 8px;
