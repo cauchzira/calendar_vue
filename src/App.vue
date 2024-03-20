@@ -1,26 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <Calendar :date="selectedDate" @selected="onSelected"/>
+    <div>Выбранная дата: "{{selectedDate}}"</div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import Calendar from "@/components/Calendar.vue";
+import { ref } from "vue";
 export default {
-  name: "App",
   components: {
-    HelloWorld,
+    Calendar
   },
+  setup() {
+    const selectedDate = ref("")
+
+    const onSelected = (date) => {
+      selectedDate.value = date
+    }
+
+    return {
+      selectedDate,
+      onSelected
+    }
+  }
 };
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
