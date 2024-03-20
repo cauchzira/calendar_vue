@@ -31,16 +31,26 @@ export default {
   },
   setup(props, {emit}) {
     const currentDate = ref(props.date ? new Date(props.date) : new Date())
-    const currentLanguage = ref(navigator.language || props.language)
+    const currentLanguage = computed(() => {
+      const lang = navigator.language || props.language
+
+      if (lang.startsWith("ru")) {
+        return "ru";
+      } else if (lang.startsWith("en")) {
+        return "en";
+      }
+
+      return "en";
+    })
     const selectedDate = ref(null)
 
     const months = {
-      'en-US': ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       ru: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
     }
 
     const daysOfWeek = {
-      'en-US': ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       ru: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
     }
 
