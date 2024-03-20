@@ -22,7 +22,7 @@ export default {
   props: {
     language: {
       type: String,
-      default: "en-US"
+      default: ""
     },
     date: {
       type: String,
@@ -32,7 +32,7 @@ export default {
   setup(props, {emit}) {
     const currentDate = ref(props.date ? new Date(props.date) : new Date())
     const currentLanguage = computed(() => {
-      const lang = navigator.language || props.language
+      const lang =  props.language || navigator.language
 
       if (lang.startsWith("ru")) {
         return "ru";
